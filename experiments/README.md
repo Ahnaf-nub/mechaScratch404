@@ -1,4 +1,4 @@
-#Experiments done to check each feature separately
+# Experiments done to check each feature separately
 1. `ExampleMotor.ino`:
 * Purpose: This code was designed to validate the motor control system.
 * Procedure: It receives throttle values ranging from -1 to 1 via the serial monitor and translates them into motor actions, including reverse movement for negative values.
