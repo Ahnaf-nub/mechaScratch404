@@ -1,0 +1,2 @@
+# 3D Printable Models
+In this section, all the STL files can be found to print and recreate this robot. These STL files that are compatible with 3D printers equipped with a 200x200 bed. They are also optimized to be printed with a very low infill percentage. Certain models may require multiple copies to be printed, and the necessary quantity is indicated in the model's name. These 3D printable models have been optimized for your convenience and can be utilized in various applications.
