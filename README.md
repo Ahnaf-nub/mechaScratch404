@@ -15,7 +15,17 @@
 # Program infrastructure and explanation of algorithm.
 coming soon!
 ## Electrical design of our robot.
-To achieve the highest possible efficiency and reliability, we have spent several hundred hours researching and developing the parts. The following paragraphs provide detailed information about electrical systems design.
+In order to achieve the highest possible efficiency and reliability, we have spent several hundred hours researching and developing the parts. The following paragraphs provide detailed information about electrical systems design.
+# Parts list
+* Esp32 Development Board
+* MG91 Servo
+* Huskylens: Embedded Vision Sensor
+* 5xHC-SR04 Ultrasonic Sensors
+* TB6612FNG Motor Driver
+* MPU6050
+* 3.0 USB Type-C Buck Boost module
+* XL6009 Buck Boost Module
+* 3S LiPo battery input through XT60 Connector
 ## Mechanical Design.
 
 We used Ackerman steering as it is a vital steering geometry concept that enhances the handling and cornering performance of vehicles, making them safer and more efficient on the road. Ackerman steering, also known as Ackerman geometry or Ackerman principle, is a steering mechanism which is used in vehicles in order to enable proper turning of the wheels while maintaining optimal geometry and minimizing tire scrubbing during turns. It is commonly used in most modern vehicles, including cars, trucks, and other wheeled vehicles.
