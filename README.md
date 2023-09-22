@@ -31,6 +31,7 @@ Once again, the ESP32's primary core handles the calculations and decision-makin
 In order to achieve the highest possible efficiency and reliability, we have spent several hundred hours researching and developing the parts. The following paragraphs provide detailed information about electrical systems design.
 ### Parts list
 * Esp32 Development Board
+* 300 rpm 25GA 12V DC Gear Motor
 * MG91 Servo
 * Huskylens: Embedded Vision Sensor
 * 5xHC-SR04 Ultrasonic Sensors
