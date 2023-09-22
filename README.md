@@ -16,7 +16,7 @@
 coming soon!
 ## Electrical design of our robot.
 In order to achieve the highest possible efficiency and reliability, we have spent several hundred hours researching and developing the parts. The following paragraphs provide detailed information about electrical systems design.
-# Parts list
+### Parts list
 * Esp32 Development Board
 * MG91 Servo
 * Huskylens: Embedded Vision Sensor
