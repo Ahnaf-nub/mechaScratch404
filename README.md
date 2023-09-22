@@ -13,7 +13,20 @@
  * v-photos - contains the photos of the robot from all required directions
  * others - other essential photos
 # Program infrastructure and explanation of algorithm.
-coming soon!
+### Qualifying Round
+The robot has five ultrasonic distance sensors, each oriented in a different direction: left, front-left, front, front-right, and right. Each sensor pair (left and right) has its own minimum and maximum detection range to ensure optimal performance. Detecting the wall at the maximum distance has no impact on the steering value, whereas detecting it at the minimum distance exerts the maximum influence on the steering value. Sensors are also fine-tuned for optimal performance in terms of their ability to influence steering values. Specific steering values are shifted to the right by the left sensors, while the right sensors are shifted to the left by the right sensors. The left and right sensors cancel each other out when they detect the wall at the same distance. Based on proximity to the wall, the front sensor determines the throttle value. The throttle value is reduced if the wall is detected too close.
+
+The lap count is monitored using a gyroscope sensor (MPU-6050). When there is a change in the robot's angle exceeding ninety degrees compared to the last recorded angle, it indicates that the robot has navigated a corner on the track. To complete three laps, the robot needs to make a total of twelve turns. Consequently, the robot is programmed to halt after a predefined time interval following the completion of its twelfth turn. 
+
+The robot harnesses the processing power of both cores of the ESP32 microcontroller by using FreeRTOS, a real-time operating system. The primary core handles all logical operations and calculations, ensuring the swift execution of tasks. Simultaneously, a separate core is dedicated to acquiring sensor data, allowing for rapid data retrieval. This dual-core configuration enables the robot to perform calculations and make decisions with remarkable speed and efficiency.
+### Obstacle Round
+Initially, the robot computes steering and throttle values using distance sensors, following the same methodology applied during the qualifying round. Subsequently, these values are adjusted based on the presence of obstacles in front of the robot.
+
+For the detection of red and green towers, the robot relies on the HuskyLens. This device identifies the red and green towers and transmits relevant data to the ESP32, including the position, width, and height of the towers on the HuskyLens' screen. The distance to the target tower is calculated using the on-screen width of the object. The ESP32 then prioritizes these detected towers based on their proximity to the robot. The robot is programmed to position green towers towards the right side of the screen and red towers towards the left side. Two values, each ranging from zero to one, are generated based on the object's screen position and distance. These values are multiplied to yield another value ranging from zero to one. This value is then added to or subtracted from the existing steering value, depending on the color of the target tower.
+
+To prevent collisions, if any tower approaches closer than a predefined distance threshold, the robot halts momentarily and reverses its direction while adjusting its steering left or right based on the color of the target tower. Afterward, it resumes forward movement as usual.
+
+Once again, the ESP32's primary core handles the calculations and decision-making processes, while the secondary core is responsible for collecting data from the distance sensors and the Husky Lens. This configuration enables the robot to react quickly and avoid collisions with walls or obstacles.
 ## Electrical design of our robot.
 In order to achieve the highest possible efficiency and reliability, we have spent several hundred hours researching and developing the parts. The following paragraphs provide detailed information about electrical systems design.
 ### Parts list
