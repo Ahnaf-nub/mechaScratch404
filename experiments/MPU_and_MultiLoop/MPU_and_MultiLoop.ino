@@ -6,7 +6,7 @@ MPU6050 mpu(Wire);
 TaskHandle_t job;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   Wire.begin();
   
   byte status = mpu.begin();
