@@ -3,15 +3,15 @@
 * A. N. M. Noor - email: nafis.noor.202012@gmail.com
 * Mir Muhammad Abidul Haq (Ahnaf) - email: abidulhaqahnaf@gmail.com
 ## Overview of our Repository
- * chasis - this folder contains the pictures of the chasis that we used on our robot.  
- * models - the 3d printable files used in our robot.
- * schematic - contains the schematic of the electrical system of our robot.
- * src - contains the main code of our robot.
- * experiments - codes that were used to do experiments.
- * video - contains the video link of youtube where our robot can be seened in action.
- * t-photos - contains one serious and one funny photo of our team.
- * v-photos - contains the photos of the robot from all required directions
- * others - other essential photos
+ * `chasis` - this folder contains the pictures of the chasis that we used on our robot.  
+ * `models` - the 3d printable files used in our robot.
+ * `schematic` - contains the schematic of the electrical system of our robot.
+ * `src` - contains the main code of our robot.
+ * `experiments` - codes that were used to do experiments.
+ * `video` - contains the video link of youtube where our robot can be seened in action.
+ * `t-photos` - contains one serious and one funny photo of our team.
+ * `v-photos` - contains the photos of the robot from all required directions
+ * `others` - other essential photos
 # Program infrastructure and explanation of algorithm.
 ### Qualifying Round
 The robot has five ultrasonic distance sensors, each oriented in a different direction: left, front-left, front, front-right, and right. Each sensor pair (left and right) has its own minimum and maximum detection range to ensure optimal performance. Detecting the wall at the maximum distance has no impact on the steering value, whereas detecting it at the minimum distance exerts the maximum influence on the steering value. Sensors are also fine-tuned for optimal performance in terms of their ability to influence steering values. Specific steering values are shifted to the right by the left sensors, while the right sensors are shifted to the left by the right sensors. The left and right sensors cancel each other out when they detect the wall at the same distance. Based on proximity to the wall, the front sensor determines the throttle value. The throttle value is reduced if the wall is detected too close.
