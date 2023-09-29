@@ -17,11 +17,21 @@
 ## Program infrastructure and explanation of algorithm.
 
 ### Qualifying Round
-The robot has five ultrasonic distance sensors, each oriented in a different direction: left, front-left, front, front-right, and right. Each sensor pair (left and right) has its own minimum and maximum detection range to ensure optimal performance. Detecting the wall at the maximum distance has no impact on the steering value, whereas detecting it at the minimum distance exerts the maximum influence on the steering value. Sensors are also fine-tuned for optimal performance in terms of their ability to influence steering values. Specific steering values are shifted to the right by the left sensors, while the right sensors are shifted to the left by the right sensors. The left and right sensors cancel each other out when they detect the wall at the same distance. Based on proximity to the wall, the front sensor determines the throttle value. The throttle value is reduced if the wall is detected too close.
+**Avoiding walls:**
+The program initiates with an initial throttle value of 1 (Full forward) and a steer value of 0 (No steering). Then it evaluates each sensor, checking whether its measured distance falls below its designated maximum distance threshold. If this condition is met, the sensor's value is remapped within a range specified by a minimum and maximum value, both of which are confined to the 0-1 range. This remapping process is inversely related to distance; the closer an object is, the higher the remapped value becomes.
 
-The lap count is monitored using a gyroscope sensor (MPU-6050). When there is a change in the robot's angle exceeding ninety degrees compared to the last recorded angle, it indicates that the robot has navigated a corner on the track. To complete three laps, the robot needs to make a total of twelve turns. Consequently, the robot is programmed to halt after a predefined time interval following the completion of its twelfth turn. 
+For sensors positioned to the sides, this recalibrated value is then either added or subtracted from the existing steer value, effectively influencing the robot's lateral movement.
+
+In the case of the front sensor, its remapped value is employed to diminish the throttle value, effectively slowing the robot down as objects come closer. Additionally, it amplifies the current steer value, causing the robot to respond more rapidly and make sharper turns when objects are detected in close proximity.
+
+This comprehensive sensor-driven control scheme ensures that the robot can effectively navigate and respond to its environment, making it capable of avoiding obstacles and adjusting its course as needed.
+
+**Lap count:**
+The program monitors the robot's orientation using an MPU6050 sensor and continually compares the difference in angle with the previously recorded angle. Each time this angle difference reaches close to 90 degrees, the program increments a turn count by 1 and updates the stored angle data. To achieve the goal of completing three laps, the robot must complete 12 turns in total.
+Therefore, when the turn count reaches the value of 12, the program triggers the robot to operate under normal conditions for a predetermined duration. After that, the robot comes to a halt, having successfully completed three laps.
 
 The robot harnesses the processing power of both cores of the ESP32 microcontroller by using FreeRTOS, a real-time operating system. The primary core handles all logical operations and calculations, ensuring the swift execution of tasks. Simultaneously, a separate core is dedicated to acquiring sensor data, allowing for rapid data retrieval. This dual-core configuration enables the robot to perform calculations and make decisions with remarkable speed and efficiency.
+
 ### Obstacle Round
 At present, the robot uses Huskylens for detecting red and green towers. The Huskylens detects the colors of these towers, and by utilizing the on-screen width value of the detected towers in pixels, the robot can estimate the distance to any visible tower. This estimation is based on an inverse proportional relationship, expressed by the equation:
 
@@ -36,14 +46,7 @@ In our case, the value of ‘k’ is 700. Using this value in the equation rough
 
 
 **Avoiding walls:**
-The program initiates with an initial throttle value of 1 (Full forward) and a steer value of 0 (No steering). Then it evaluates each sensor, checking whether its measured distance falls below its designated maximum distance threshold. If this condition is met, the sensor's value is remapped within a range specified by a minimum and maximum value, both of which are confined to the 0-1 range. This remapping process is inversely related to distance; the closer an object is, the higher the remapped value becomes.
-
-For sensors positioned to the sides, this recalibrated value is then either added or subtracted from the existing steer value, effectively influencing the robot's lateral movement.
-
-In the case of the front sensor, its remapped value is employed to diminish the throttle value, effectively slowing the robot down as objects come closer. Additionally, it amplifies the current steer value, causing the robot to respond more rapidly and make sharper turns when objects are detected in close proximity.
-
-This comprehensive sensor-driven control scheme ensures that the robot can effectively navigate and respond to its environment, making it capable of avoiding obstacles and adjusting its course as needed.
-
+This is done the same way as in the [qualifying round](https://github.com/Ahnaf-nub/mechaScratch404#qualifying-round).
 
 **Avoiding towers:**
 After obtaining the initial steer and throttle values from the sonar sensors, the program proceeds to adjust these values based on the presence of red and green towers in the environment.
@@ -64,10 +67,7 @@ Additionally, if any object, such as a wall or tower, approaches closer to the r
 
 
 **Lap count:**
-The program monitors the robot's orientation using an MPU6050 sensor and continually compares the difference in angle with the previously recorded angle. Each time this angle difference reaches close to 90 degrees, the program increments a turn count by 1 and updates the stored angle data. To achieve the goal of completing three laps, the robot must complete 12 turns in total.
-
-Therefore, when the turn count reaches the value of 12, the program triggers the robot to operate under normal conditions for a predetermined duration. After that, the robot comes to a halt, having successfully completed three laps.
-
+This is done the same way as in the [qualifying round](https://github.com/Ahnaf-nub/mechaScratch404#qualifying-round).
 
 **U-turn:**
 After completing the second lap, which corresponds to the 8th turn, the program saves the type of the last detected object. If this last object is determined to be red, the robot does a full 180-degree turn, accomplished through the MPU, reversing its orientation. Following this 180-degree turn, the robot resumes its normal operation, continuing with its regular navigation and obstacle avoidance methods.
