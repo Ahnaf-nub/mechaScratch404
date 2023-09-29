@@ -2,6 +2,7 @@
 ## Team Members:
 * A. N. M. Noor - email: nafis.noor.202012@gmail.com
 * Mir Muhammad Abidul Haq (Ahnaf) - email: abidulhaqahnaf@gmail.com
+
 ## Overview of our Repository
  * `chassis` - this folder contains the pictures of the chassis that we used on our robot.  
  * `models` - the 3D printable files used in our robot.
@@ -12,6 +13,7 @@
  * `t-photos` - contains one serious and one funny photo of our team.
  * `v-photos` - contains the photos of the robot from all required directions
  * `others` - other essential photos
+
 ## Program infrastructure and explanation of algorithm.
 
 ### Qualifying Round
@@ -32,6 +34,7 @@ The value of ‘k’ was determined by plotting real-life data on a graph.
 
 In our case, the value of ‘k’ is 700. Using this value in the equation roughly matches the real-life data acquired from experiments.
 
+
 **Avoiding walls:**
 The program initiates with an initial throttle value of 1 (Full forward) and a steer value of 0 (No steering). Then it evaluates each sensor, checking whether its measured distance falls below its designated maximum distance threshold. If this condition is met, the sensor's value is remapped within a range specified by a minimum and maximum value, both of which are confined to the 0-1 range. This remapping process is inversely related to distance; the closer an object is, the higher the remapped value becomes.
 
@@ -40,6 +43,7 @@ For sensors positioned to the sides, this recalibrated value is then either adde
 In the case of the front sensor, its remapped value is employed to diminish the throttle value, effectively slowing the robot down as objects come closer. Additionally, it amplifies the current steer value, causing the robot to respond more rapidly and make sharper turns when objects are detected in close proximity.
 
 This comprehensive sensor-driven control scheme ensures that the robot can effectively navigate and respond to its environment, making it capable of avoiding obstacles and adjusting its course as needed.
+
 
 **Avoiding towers:**
 After obtaining the initial steer and throttle values from the sonar sensors, the program proceeds to adjust these values based on the presence of red and green towers in the environment.
@@ -52,15 +56,18 @@ The program systematically evaluates all visible towers and selects the one clos
 
 These two calculated values are then multiplied together, yielding a new value also ranging from 0 to 1. This new value is added to or subtracted from the existing steer value. This dynamic adjustment based on tower presence and location allows the robot to navigate and react to the positions of red and green towers, facilitating precise and adaptable movement.
 
+
 **Avoiding collisions:**
 To address the possibility of collisions with walls or towers after modifying the steer and throttle values using the tower detection algorithm, the program implements continuous monitoring of distance values. If any of these values fall below a specified threshold, the program overrides the modifications made by the tower-avoidance algorithm and reverts to actions based on the distance values alone.
 
 Additionally, if any object, such as a wall or tower, approaches closer to the robot than a predefined distance threshold, the program initiates a brief backward movement. During this backward motion, the program also adjusts the steer value based on the color of the target tower. For instance, if the robot detects a red tower, it may steer left while moving backward, and for a green tower, it may steer right. This dynamic response mechanism ensures that the robot takes evasive action to avoid collisions while considering the type and location of the detected objects.
 
+
 **Lap count:**
 The program monitors the robot's orientation using an MPU6050 sensor and continually compares the difference in angle with the previously recorded angle. Each time this angle difference reaches close to 90 degrees, the program increments a turn count by 1 and updates the stored angle data. To achieve the goal of completing three laps, the robot must complete 12 turns in total.
 
 Therefore, when the turn count reaches the value of 12, the program triggers the robot to operate under normal conditions for a predetermined duration. After that, the robot comes to a halt, having successfully completed three laps.
+
 
 **U-turn:**
 After completing the second lap, which corresponds to the 8th turn, the program saves the type of the last detected object. If this last object is determined to be red, the robot does a full 180-degree turn, accomplished through the MPU, reversing its orientation. Following this 180-degree turn, the robot resumes its normal operation, continuing with its regular navigation and obstacle avoidance methods.
